@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mem.xml -->
+<!-- 실행할 SQL문을 정의해 놓은 파일(DAO클래스 역할) -->
+<!-- 주의사항: 종결문자; 생략해야 함 -->
+<mapper namespace="mem">
+
+	<!-- ?기호를 대신하는 문법: 파라미터 바인딩 표기법 #{property} -->
+	<!-- 회원 가입 -->
+	<insert id="insertMem" parameterType="memDTO">
+	<![CDATA[
+		INSERT INTO 
+		tb_member(name, id, pw)
+		VALUES(#{name}, #{id}, #{pw})
+	]]>
+	</insert>
+	
+	<select id="selectMem" parameterType="String" resultMap="rs">
+	<![CDATA[
+		SELECT * FROM tb_member
+		WHERE id=#{id}
+	]]>
+	</select>
+
+	<!-- DB에서 가져온 행 값을 객체에 매핑하는 방법을 정의 ResultSet에서 가져와서 DTO에 담고 ArrayList에 추가하는 
+		기능 -->
+	<resultMap type="memDTO" id="rs">
+		<result column="id" property="id" />
+		<result column="pw" property="pw" />
+		<result column="name" property="name" />
+	</resultMap>
+	
+</mapper>
